@@ -13,13 +13,13 @@ module.exports = {
       // models.users.get(); // like this
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      console.log('req: ', req, 'res: ', res);
+      //console.log('req: ', req, 'res: ', res);
       
       models.messages.post(req.body, function(error, data) { //req.body is our data
         if (error) {
           throw error;
         } else {
-          res.send('porsted!'); // response.end/writehead
+          res.send('posted!'); // response.end/writehead
         }
       });
  
@@ -27,9 +27,28 @@ module.exports = {
   },
 
   users: {
-    // Ditto as above
-    get: function (req, res) {},
-    post: function (req, res) {}
+      // Ditto as above
+    get: function (req, res) {
+      models.users.get(null, function(error, data) {
+        if (error) {
+          throw error;
+        } else {
+          res.send(data); // response.end/writehead
+        }
+      });
+          // models.users.get(); // like this
+    },
+    post: function (req, res) {
+      console.log('REQUEST BODY', req.body);
+      models.users.post(req.body, function(error, data) { //req.body is our data
+        if (error) {
+          throw error;
+        } else {
+          res.send('posted!'); // response.end/writehead
+        }
+      });
+   
+    } 
   }
 };
 

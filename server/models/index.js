@@ -33,8 +33,28 @@ module.exports = {
 
   users: {
     // Ditto as above.
-    get: function () {},
-    post: function () {}
+    get: function (options, callback) {
+      db.query('SELECT username FROM users ', function(error, results) {
+        console.log('results get ', results);
+        if (error) {
+          callback(error);
+          return;
+        }
+        callback(null, results);
+      });
+    },
+    post: function (data, callback) {
+      var queryArgs = [data.username];
+      console.log('data is', data); //
+      db.query(`INSERT INTO users (username) VALUES (?)`, queryArgs, function(error, results) {
+        console.log('results get ', results);
+        if (error) {
+          callback(error);
+          return;
+        }
+        callback(null, results);
+      });
+    }
   }
 };
 
